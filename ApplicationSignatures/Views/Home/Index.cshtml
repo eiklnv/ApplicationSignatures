@@ -1,57 +1,87 @@
 ﻿@{
     ViewBag.Title = "Application Signatures";
 }
+<div class="container">
+    <div class="page-header-fixed-top container inner-container">
+        <div class="input-group hidden-print" style="margin: 5px 0 0 10px">
+            <span class="input-group-addon">Search by Application Name</span>
+            <input id="filter" type="text" class="form-control" placeholder="Type here...">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category<span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#">All</a></li>
+                    <li><a href="#">Network.Service</a></li>
+                    <li><a href="#">Social.Media</a></li>
+                    <li><a href="#">General.Interest</a></li>
+                    <li><a href="#">Storage.Backup</a></li>
+                </ul>
+            </div>
+        </div>
 
-<table id="application-signature-table" class="display" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Popularity</th>
-            <th>Risk</th>
-            <th>Released</th>
-            <th>Vendor</th>
-        </tr>
-    </thead>
-
-    <tfoot>
-        <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Popularity</th>
-            <th>Risk</th>
-            <th>Released</th>
-            <th>Vendor</th>
-        </tr>
-    </tfoot>
-</table>
+        <div class="table-header-font">
+            <div class="col-md-3"><span>Application Name</span></div>
+            <div class="col-md-2">Category</div>
+            <div class="col-md-2">Technology</div>
+            <div class="col-md-1">Popularity</div>
+            <div class="col-md-1">Risk</div>
+            <div class="col-md-1">Deep App Control</div>
+            <div class="col-md-2">Last Released</div>
+        </div>
+    </div>
+    <div id="wrapper" class="container inner-container page-body-padding">
+        <div id="main-wrapper">
+            <div id="main">
+                <div data-bind="foreach: Apps">
+                    <div class="searchable-app">
+                        <div class="col-md-3 searchable-key" data-bind="text: Name"></div>
+                        <div class="col-md-2" data-bind="text: Category"></div>
+                        <div class="col-md-2" data-bind="text: Technology"></div>
+                        <div class="col-md-1" data-bind="text: Popularity"></div>
+                        <div class="col-md-1" data-bind="text: Risk"></div>
+                        <div class="col-md-1" data-bind="text: DeepAppCtrl"></div>
+                        <div class="col-md-2" data-bind="text: Released"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/knockout-3.3.0.js"></script>
+    <script src="~/Scripts/Home/ApplicationSignature.js"></script>
 
     <script type="text/javascript">
-        //$(document).ready(function() {
-        //    $('#application-signature-table').dataTable({
-        //        "ajax": 'GetJson'
-        //    } );
-        //});
+        $(document).ready(function() {
+            $('#filter').keyup(function () {
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable-app').hide();
+                $('.searchable-app').filter(function () {
+                    return rex.test($(this).children('.searchable-key').text());
+                }).show();
+            })
+        });
 
         // Here's my data model
         var ViewModel = function (model) {
-            this.model = ko.observableArray()
-            //this.firstName = ko.observable(first);
-            //this.lastName = ko.observable(last);
+            var self = this;
 
-            //this.fullName = ko.pureComputed(function () {
-            //    // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
-            //    return this.firstName() + " " + this.lastName();
-            //}, this);
-            this.model = JSON.parse(@Html.Raw(ViewBag.Model));
+            self.Apps = ko.observableArray();
+            model.forEach(function (appSig) {
+                self.Apps.push(new ApplicationSignature(appSig));
+            });
+
         };
 
-        console.log(@ViewBag.Model);
-        ko.applyBindings(new ViewModel(@ViewBag.Model));
+        function EncodeModel() {
+            return @(Html.Raw(Json.Encode(ViewBag.Model)))
+        }
+
+        var model = EncodeModel();
+
+        ko.applyBindings(new ViewModel(model));
     </script>
 }
+

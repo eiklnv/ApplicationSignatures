@@ -19,7 +19,7 @@ namespace ApplicationSignatures.Controllers
             //    ViewBag.Model = r.ReadToEnd();
             //}
 
-            ViewBag.Model = LoadJson();
+            ViewBag.Model = LoadJson().Take(20);
 
             return View();
         }
@@ -51,7 +51,7 @@ namespace ApplicationSignatures.Controllers
         {
             var apps = LoadJson();
 
-            return Json(apps.Take(50), JsonRequestBehavior.AllowGet);
+            return Json(apps.Take(20), JsonRequestBehavior.AllowGet);
         }
 
         private List<ApplicationSignatureViewModel> LoadJson()

@@ -1,6 +1,43 @@
-﻿body {
+﻿/*body {
     padding-top: 50px;
     padding-bottom: 20px;
+}*/
+
+.container {
+    width: 100%;
+}
+
+.logo
+{
+    float: left;
+    margin: 25px 0 30px 0;
+    width: 190px;
+    height: 40px;
+    background: url(~/Content/fortinet_logo.png) no-repeat;
+    display: block;
+}
+
+.navbar-fixed-top {
+    top: 0;
+    border-width: 0 0 1px;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+.page-header-fixed-top {
+    top: 50px;
+    position: fixed;
+    z-index: 1029;
+}
+
+.table-header-font {
+    font-weight: bold;
+}
+
+.page-body-padding {
+    padding-top: 100px;
 }
 
 /* Set padding to keep content from hitting the edges */
