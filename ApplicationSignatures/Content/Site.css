@@ -4,7 +4,8 @@
 }*/
 
 .container {
-    width: 100%;
+    width: 1800px;
+    padding: 0px;
 }
 
 .logo
@@ -32,12 +33,17 @@
     z-index: 1029;
 }
 
-.table-header-font {
+.app-header {
     font-weight: bold;
+    cursor: pointer;
+}
+
+.app-header div.app-header-space {
+    margin-top: 10px;
 }
 
 .page-body-padding {
-    padding-top: 100px;
+    padding-top: 120px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -59,3 +65,36 @@ select,
 textarea {
     max-width: 280px;
 }
+
+ul.apps {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.alternate {
+    background: rgb(216, 232, 249);
+}
+
+div.app-field {
+    background: inherit;
+}
+
+.toolbar
+{
+    position: relative;
+    padding: 0;
+    display: table;
+}
+
+.toolbar > div
+{
+    display: table-cell;
+    padding-right: 8px;
+    vertical-align: top;
+}
+
+    .toolbar.btn-group, .toolbar.btn-group-vertical
+    {
+        vertical-align: inherit;
+    }

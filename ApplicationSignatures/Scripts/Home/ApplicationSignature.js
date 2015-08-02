@@ -1,5 +1,6 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/knockout/knockout.d.ts" />
+/// <reference path="../typings/moment/moment.d.ts" />
 var ApplicationSignature = (function () {
     // Client Side Controls
     function ApplicationSignature(signature) {
@@ -17,6 +18,9 @@ var ApplicationSignature = (function () {
         self.Popularity = ko.observable(signature.Popularity);
         self.Risk = ko.observable(signature.Risk);
         self.Released = ko.observable(signature.Released);
+        self.ReleasedDisplay = ko.computed(function () {
+            return moment(self.Released()).format('YYYY-MM-DD');
+        });
         self.Vendor = ko.observable(signature.Vendor);
         self.Url = ko.observable(signature.Url);
         self.References = ko.observableArray([]);
@@ -33,7 +37,9 @@ var ApplicationSignature = (function () {
         self.PopularityScore = ko.observable(signature.PopularityScore);
         self.Language = ko.observable(signature.Language);
         self.DeepAppCtrl = ko.observable(signature.DeepAppCtrl);
+        self.DeepAppCtrlDisplay = ko.computed(function () {
+            return self.DeepAppCtrl() > 0 ? "Yes" : "No";
+        });
     }
     return ApplicationSignature;
 })();
-//# sourceMappingURL=ApplicationSignature.js.map

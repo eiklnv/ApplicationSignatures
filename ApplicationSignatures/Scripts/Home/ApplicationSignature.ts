@@ -1,5 +1,6 @@
 ﻿/// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/knockout/knockout.d.ts" />
+/// <reference path="../typings/moment/moment.d.ts" />
 
 class ApplicationSignature {
     // Model Vars
@@ -10,6 +11,7 @@ class ApplicationSignature {
     Popularity: KnockoutObservable<number>;
     Risk: KnockoutObservable<number>;
     Released: KnockoutObservable<string>;
+    ReleasedDisplay: KnockoutComputed<string>;
     Vendor: KnockoutObservable<string>;
     Url: KnockoutObservable<string>;
     References: KnockoutObservableArray<string>;
@@ -21,6 +23,7 @@ class ApplicationSignature {
     PopularityScore: KnockoutObservable<number>;
     Language: KnockoutObservable<string>;
     DeepAppCtrl: KnockoutObservable<number>;
+    DeepAppCtrlDisplay: KnockoutComputed<string>;
 
     // Client Side Controls
 
@@ -40,6 +43,9 @@ class ApplicationSignature {
         self.Popularity = ko.observable<number>(signature.Popularity);
         self.Risk = ko.observable<number>(signature.Risk);
         self.Released = ko.observable<string>(signature.Released);
+        self.ReleasedDisplay = ko.computed<string>(function () {
+            return moment(self.Released()).format('YYYY-MM-DD');
+        });
         self.Vendor = ko.observable<string>(signature.Vendor);
         self.Url = ko.observable<string>(signature.Url);
         self.References = ko.observableArray<string>([]);
@@ -56,6 +62,9 @@ class ApplicationSignature {
         self.PopularityScore = ko.observable<number>(signature.PopularityScore);
         self.Language = ko.observable<string>(signature.Language);
         self.DeepAppCtrl = ko.observable<number>(signature.DeepAppCtrl);
+        self.DeepAppCtrlDisplay = ko.computed<string>(function () {
+            return self.DeepAppCtrl() > 0 ? "Yes" : "No";
+        });
     }
 
 }

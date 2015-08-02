@@ -3,47 +3,203 @@
 }
 <div class="container">
     <div class="page-header-fixed-top container inner-container">
-        <div class="input-group hidden-print" style="margin: 5px 0 0 10px">
-            <span class="input-group-addon">Search by Application Name</span>
-            <input id="filter" type="text" class="form-control" placeholder="Type here...">
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category<span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="#">All</a></li>
-                    <li><a href="#">Network.Service</a></li>
-                    <li><a href="#">Social.Media</a></li>
-                    <li><a href="#">General.Interest</a></li>
-                    <li><a href="#">Storage.Backup</a></li>
-                </ul>
+        <div class="toolbar">
+            <div>
+                <div class="input-group hidden-print" style="margin: 5px 0 0 10px">
+                    <span class="input-group-addon">Search by Application Name</span>
+                    <input id="filter" type="text" class="form-control" placeholder="Type here...">
+                </div>
             </div>
-        </div>
-
-        <div class="table-header-font">
-            <div class="col-md-3"><span>Application Name</span></div>
-            <div class="col-md-2">Category</div>
-            <div class="col-md-2">Technology</div>
-            <div class="col-md-1">Popularity</div>
-            <div class="col-md-1">Risk</div>
-            <div class="col-md-1">Deep App Control</div>
-            <div class="col-md-2">Last Released</div>
-        </div>
-    </div>
-    <div id="wrapper" class="container inner-container page-body-padding">
-        <div id="main-wrapper">
-            <div id="main">
-                <div data-bind="foreach: Apps">
-                    <div class="searchable-app">
-                        <div class="col-md-3 searchable-key" data-bind="text: Name"></div>
-                        <div class="col-md-2" data-bind="text: Category"></div>
-                        <div class="col-md-2" data-bind="text: Technology"></div>
-                        <div class="col-md-1" data-bind="text: Popularity"></div>
-                        <div class="col-md-1" data-bind="text: Risk"></div>
-                        <div class="col-md-1" data-bind="text: DeepAppCtrl"></div>
-                        <div class="col-md-2" data-bind="text: Released"></div>
-                    </div>
+            <div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category<span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">Network.Service</a></li>
+                        <li><a href="#">Social.Media</a></li>
+                        <li><a href="#">General.Interest</a></li>
+                        <li><a href="#">Storage.Backup</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Technology<span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">Browser-Based</a></li>
+                        <li><a href="#">Network-Protocol</a></li>
+                        <li><a href="#">Client-Server</a></li>
+                        <li><a href="#">Peer-to-Peer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Popularity<span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">1</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Risk<span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">1</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
+
+        <div class="app-header">
+            <div class="col-md-3 app-header-space" data-bind="click: SortByName">
+                <span>Application Name</span>
+                <!-- ko if: SortMethod() == 'Name'-->
+                <!-- ko if: SortAscending() -->
+                <span class="glyphicon glyphicon-chevron-up"></span>
+                <!-- /ko -->
+                <!-- ko ifnot: SortAscending() -->
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <!-- /ko -->
+                <!-- /ko-->
+            </div>
+            <div class="col-md-2 app-header-space" data-bind="click: SortByCategory">
+                <span>Category</span>
+                <!-- ko if: SortMethod() == 'Category'-->
+                <!-- ko if: SortAscending() -->
+                <span class="glyphicon glyphicon-chevron-up"></span>
+                <!-- /ko -->
+                <!-- ko ifnot: SortAscending() -->
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <!-- /ko -->
+                <!-- /ko-->
+            </div>
+            <div class="col-md-2 app-header-space" data-bind="click: SortByTechnology">
+                <span>Technology</span>
+                <!-- ko if: SortMethod() == 'Technology'-->
+                <!-- ko if: SortAscending() -->
+                <span class="glyphicon glyphicon-chevron-up"></span>
+                <!-- /ko -->
+                <!-- ko ifnot: SortAscending() -->
+                <span class="glyphicon glyphicon-chevron-down"></span>
+                <!-- /ko -->
+                <!-- /ko-->
+            </div>
+            <div class="col-md-5 app-header-space">
+                <div class="col-md-3" data-bind="click: SortByPopularity">
+                    <span>Popularity</span>
+                    <!-- ko if: SortMethod() == 'Popularity'-->
+                    <!-- ko if: SortAscending() -->
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                    <!-- /ko -->
+                    <!-- ko ifnot: SortAscending() -->
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                    <!-- /ko -->
+                    <!-- /ko-->
+                </div>
+                <div class="col-md-3" data-bind="click: SortByRisk">
+                    <span>Risk</span>
+                    <!-- ko if: SortMethod() == 'Risk'-->
+                    <!-- ko if: SortAscending() -->
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                    <!-- /ko -->
+                    <!-- ko ifnot: SortAscending() -->
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                    <!-- /ko -->
+                    <!-- /ko-->
+                </div>
+                <div class="col-md-3">Deep App Ctrl</div>
+                <div class="col-md-3" data-bind="click: SortByRelease">
+                    <span>Last Released</span>
+                    <!-- ko if: SortMethod() == 'Release'-->
+                    <!-- ko if: SortAscending() -->
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                    <!-- /ko -->
+                    <!-- ko ifnot: SortAscending() -->
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                    <!-- /ko -->
+                    <!-- /ko-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container inner-container page-body-padding">
+        <ul class="apps" data-bind="foreach: Apps">
+            <li class="searchable-app">
+                <div class="col-md-3 app-field searchable-key" data-bind="text: Name"></div>
+                <div class="col-md-2 app-field" data-bind="text: Category"></div>
+                <div class="col-md-2 app-field" data-bind="text: Technology"></div>
+                <div class="col-md-5 app-field">
+                    <div class="col-md-3 app-field">
+                        <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                        <!-- ko if: Popularity() >= 2 -->
+                        <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Popularity() >= 3 -->
+                        <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Popularity() >= 4 -->
+                        <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Popularity() >= 5 -->
+                        <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Popularity() <= 4 -->
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Popularity() <= 3 -->
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Popularity() <= 2 -->
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Popularity() <= 1 -->
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <!-- /ko-->
+                    </div>
+                    <div class="col-md-3 app-field bars">
+                        <span class="fa fa-bell" style="color: green"></span>
+                        <!-- ko if: Risk() >= 2 -->
+                        <span class="fa fa-bell" style="color: blue"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Risk() >= 3 -->
+                        <span class="fa fa-bell" style="color: orange"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Risk() >= 4 -->
+                        <span class="fa fa-bell" style="color: darkorange"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Risk() >= 5 -->
+                        <span class="fa fa-bell" style="color: red"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Risk() <= 4 -->
+                        <span class="fa fa-bell-o"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Risk() <= 3 -->
+                        <span class="fa fa-bell-o"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Risk() <= 2 -->
+                        <span class="fa fa-bell-o"></span>
+                        <!-- /ko-->
+                        <!-- ko if: Risk() <= 1 -->
+                        <span class="fa fa-bell-o"></span>
+                        <!-- /ko-->
+                    </div>
+                    <div class="col-md-3 app-field" data-bind="text: DeepAppCtrlDisplay"></div>
+                    <div class="col-md-3 app-field" data-bind="text: ReleasedDisplay"></div>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
 
@@ -51,18 +207,29 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/knockout-3.3.0.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/Home/ApplicationSignature.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
+            $('.searchable-app:visible:even').addClass('alternate');
+
             $('#filter').keyup(function () {
                 var rex = new RegExp($(this).val(), 'i');
                 $('.searchable-app').hide();
                 $('.searchable-app').filter(function () {
                     return rex.test($(this).children('.searchable-key').text());
                 }).show();
+                UpdateHighlighting();
             })
+
+            UpdateHighlighting();
         });
+
+        var UpdateHighlighting = function () {
+            $('.searchable-app').removeClass('alternate');
+            $('.searchable-app:visible:even').addClass('alternate');
+        }
 
         // Here's my data model
         var ViewModel = function (model) {
@@ -73,6 +240,274 @@
                 self.Apps.push(new ApplicationSignature(appSig));
             });
 
+            self.SortMethod = ko.observable('');
+            self.SortAscending = ko.observable(true);
+
+            self.SortByName = function () {
+                // currently not sorting by name, so we sort ascending
+                if (self.SortMethod() != 'Name') {
+                    self.Apps.sort(function (left, right) {
+                        if (left.Name() == right.Name())
+                            return 0;
+                        else if (left.Name() < right.Name())
+                            return -1;
+                        else
+                            return 1;
+                    });
+                    self.SortAscending(true);
+                }
+                // currently already sorting by name
+                else {
+                    // currently sorted ascending, we then sort it descending
+                    if (self.SortAscending()) {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Name() == right.Name())
+                                return 0;
+                            else if (left.Name() < right.Name())
+                                return 1;
+                            else
+                                return -1;
+                        });
+                        self.SortAscending(false);
+                    }
+                    // currently sorted descending, we then sort it ascending
+                    else {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Name() == right.Name())
+                                return 0;
+                            else if (left.Name() < right.Name())
+                                return -1;
+                            else
+                                return 1;
+                        });
+                        self.SortAscending(true);
+                    }
+                }
+                self.SortMethod('Name');
+                UpdateHighlighting();
+            }
+
+            self.SortByCategory = function () {
+                // currently not sorting by name, so we sort ascending
+                if (self.SortMethod() != 'Category') {
+                    self.Apps.sort(function (left, right) {
+                        if (left.Category() == right.Category())
+                            return 0;
+                        else if (left.Category() < right.Category())
+                            return -1;
+                        else
+                            return 1;
+                    });
+                    self.SortAscending(true);
+                }
+                    // currently already sorting by name
+                else {
+                    // currently sorted ascending, we then sort it descending
+                    if (self.SortAscending()) {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Category() == right.Category())
+                                return 0;
+                            else if (left.Category() < right.Category())
+                                return 1;
+                            else
+                                return -1;
+                        });
+                        self.SortAscending(false);
+                    }
+                        // currently sorted descending, we then sort it ascending
+                    else {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Category() == right.Category())
+                                return 0;
+                            else if (left.Category() < right.Category())
+                                return -1;
+                            else
+                                return 1;
+                        });
+                        self.SortAscending(true);
+                    }
+                }
+                self.SortMethod('Category');
+                UpdateHighlighting();
+            }
+
+            self.SortByTechnology = function () {
+                // currently not sorting by name, so we sort ascending
+                if (self.SortMethod() != 'Technology') {
+                    self.Apps.sort(function (left, right) {
+                        if (left.Technology()[0] == right.Technology()[0])
+                            return 0;
+                        else if (left.Technology()[0] < right.Technology()[0])
+                            return -1;
+                        else
+                            return 1;
+                    });
+                    self.SortAscending(true);
+                }
+                    // currently already sorting by name
+                else {
+                    // currently sorted ascending, we then sort it descending
+                    if (self.SortAscending()) {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Technology()[0] == right.Technology()[0])
+                                return 0;
+                            else if (left.Technology()[0] < right.Technology()[0])
+                                return 1;
+                            else
+                                return -1;
+                        });
+                        self.SortAscending(false);
+                    }
+                        // currently sorted descending, we then sort it ascending
+                    else {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Technology()[0] == right.Technology()[0])
+                                return 0;
+                            else if (left.Technology()[0] < right.Technology()[0])
+                                return -1;
+                            else
+                                return 1;
+                        });
+                        self.SortAscending(true);
+                    }
+                }
+                self.SortMethod('Technology');
+                UpdateHighlighting();
+            }
+
+            self.SortByPopularity = function () {
+                // currently not sorting by name, so we sort ascending
+                if (self.SortMethod() != 'Popularity') {
+                    self.Apps.sort(function (left, right) {
+                        if (left.Popularity() == right.Popularity())
+                            return 0;
+                        else if (left.Popularity() < right.Popularity())
+                            return -1;
+                        else
+                            return 1;
+                    });
+                    self.SortAscending(true);
+                }
+                    // currently already sorting by name
+                else {
+                    // currently sorted ascending, we then sort it descending
+                    if (self.SortAscending()) {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Popularity() == right.Popularity())
+                                return 0;
+                            else if (left.Popularity() < right.Popularity())
+                                return 1;
+                            else
+                                return -1;
+                        });
+                        self.SortAscending(false);
+                    }
+                        // currently sorted descending, we then sort it ascending
+                    else {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Popularity() == right.Popularity())
+                                return 0;
+                            else if (left.Popularity() < right.Popularity())
+                                return -1;
+                            else
+                                return 1;
+                        });
+                        self.SortAscending(true);
+                    }
+                }
+                self.SortMethod('Popularity');
+                UpdateHighlighting();
+            }
+            
+            self.SortByRisk = function () {
+                // currently not sorting by name, so we sort ascending
+                if (self.SortMethod() != 'Risk') {
+                    self.Apps.sort(function (left, right) {
+                        if (left.Risk() == right.Risk())
+                            return 0;
+                        else if (left.Risk() < right.Risk())
+                            return -1;
+                        else
+                            return 1;
+                    });
+                    self.SortAscending(true);
+                }
+                    // currently already sorting by name
+                else {
+                    // currently sorted ascending, we then sort it descending
+                    if (self.SortAscending()) {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Risk() == right.Risk())
+                                return 0;
+                            else if (left.Risk() < right.Risk())
+                                return 1;
+                            else
+                                return -1;
+                        });
+                        self.SortAscending(false);
+                    }
+                        // currently sorted descending, we then sort it ascending
+                    else {
+                        self.Apps.sort(function (left, right) {
+                            if (left.Risk() == right.Risk())
+                                return 0;
+                            else if (left.Risk() < right.Risk())
+                                return -1;
+                            else
+                                return 1;
+                        });
+                        self.SortAscending(true);
+                    }
+                }
+                self.SortMethod('Risk');
+                UpdateHighlighting();
+            }
+
+            self.SortByRelease = function () {
+                // currently not sorting by name, so we sort ascending
+                if (self.SortMethod() != 'Release') {
+                    self.Apps.sort(function (left, right) {
+                        if (left.ReleasedDisplay() == right.ReleasedDisplay())
+                            return 0;
+                        else if (left.ReleasedDisplay() < right.ReleasedDisplay())
+                            return -1;
+                        else
+                            return 1;
+                    });
+                    self.SortAscending(true);
+                }
+                    // currently already sorting by name
+                else {
+                    // currently sorted ascending, we then sort it descending
+                    if (self.SortAscending()) {
+                        self.Apps.sort(function (left, right) {
+                            if (left.ReleasedDisplay() == right.ReleasedDisplay())
+                                return 0;
+                            else if (left.ReleasedDisplay() < right.ReleasedDisplay())
+                                return 1;
+                            else
+                                return -1;
+                        });
+                        self.SortAscending(false);
+                    }
+                        // currently sorted descending, we then sort it ascending
+                    else {
+                        self.Apps.sort(function (left, right) {
+                            if (left.ReleasedDisplay() == right.ReleasedDisplay())
+                                return 0;
+                            else if (left.ReleasedDisplay() < right.ReleasedDisplay())
+                                return -1;
+                            else
+                                return 1;
+                        });
+                        self.SortAscending(true);
+                    }
+                }
+                self.SortMethod('Release');
+                UpdateHighlighting();
+            }
+
+            self.SortByName();
         };
 
         function EncodeModel() {
@@ -81,7 +516,8 @@
 
         var model = EncodeModel();
 
-        ko.applyBindings(new ViewModel(model));
+        var view = new ViewModel(model);
+        ko.applyBindings(view);
     </script>
 }
 
