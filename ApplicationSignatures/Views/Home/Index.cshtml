@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Application Signatures";
+}
+
+<table id="application-signature-table" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Popularity</th>
+            <th>Risk</th>
+            <th>Released</th>
+            <th>Vendor</th>
+        </tr>
+    </thead>
+
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Popularity</th>
+            <th>Risk</th>
+            <th>Released</th>
+            <th>Vendor</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/knockout-3.3.0.js"></script>
+
+    <script type="text/javascript">
+        //$(document).ready(function() {
+        //    $('#application-signature-table').dataTable({
+        //        "ajax": 'GetJson'
+        //    } );
+        //});
+
+        // Here's my data model
+        var ViewModel = function (model) {
+            this.model = ko.observableArray()
+            //this.firstName = ko.observable(first);
+            //this.lastName = ko.observable(last);
+
+            //this.fullName = ko.pureComputed(function () {
+            //    // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
+            //    return this.firstName() + " " + this.lastName();
+            //}, this);
+            this.model = JSON.parse(@Html.Raw(ViewBag.Model));
+        };
+
+        console.log(@ViewBag.Model);
+        ko.applyBindings(new ViewModel(@ViewBag.Model));
+    </script>
+}
