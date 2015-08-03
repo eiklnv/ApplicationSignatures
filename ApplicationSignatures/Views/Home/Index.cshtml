@@ -12,8 +12,8 @@
             </div>
             <div>
                 <div class="dropdown keep-open">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Category <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Category <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
                         <!-- ko if: VisibleCategories().length < AllCategories.length -->
                         <li data-bind="click: SelectAllCategories">
                             <span class="fa fa-fw fa-hand-pointer-o"></span>
@@ -43,8 +43,8 @@
             </div>
             <div>
                 <div class="dropdown keep-open">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Technology <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Technology <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
                         <!-- ko if: VisibleTechnologies().length < AllTechnologies.length -->
                         <li data-bind="click: SelectAllTechnologies">
                             <span class="fa fa-fw fa-hand-pointer-o"></span>
@@ -74,8 +74,8 @@
             </div>
             <div>
                 <div class="dropdown keep-open">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Popularity <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Popularity <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
                         <!-- ko if: VisiblePopularities().length < AllPopularities.length -->
                         <li data-bind="click: SelectAllPopularities">
                             <span class="fa fa-fw fa-hand-pointer-o"></span>
@@ -129,8 +129,8 @@
             </div>
             <div>
                 <div class="dropdown keep-open">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Risk <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Risk <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
                         <!-- ko if: VisibleRisks().length < AllRisks.length -->
                         <li data-bind="click: SelectAllRisks">
                             <span class="fa fa-fw fa-hand-pointer-o"></span>
@@ -257,7 +257,7 @@
         </div>
     </div>
     <div class="container inner-container page-body-padding">
-        <ul class="apps" data-bind="foreach: Apps" style="border-top: solid thin">
+        <ul class="apps" data-bind="foreach: Apps">
             <li class="searchable-app" data-bind="css: { visible: IsVisible, hidden: !IsVisible() }">
                 <div class="col-md-3 app-field searchable-key" data-bind="text: Name"></div>
                 <div class="col-md-2 app-field" data-bind="text: Category"></div>
@@ -337,8 +337,8 @@
         $(document).ready(function () {
             $('.dropdown.keep-open').on({
                 "shown.bs.dropdown": function () { this.closable = true; },
-                "click": function () { this.closable = false; },
-                "hide.bs.dropdown": function () { return this.closable; }
+                "click":             function () { this.closable = false; },
+                "hide.bs.dropdown":  function () { return this.closable; }
             });
 
             $('#filter').on('keyup', function () {
@@ -347,7 +347,7 @@
 
             $('.searchable-app').addClass("visible");
             UpdateHighlighting();
-        });
+        });       
 
         var UpdateHighlighting = function () {
             $('.searchable-app').removeClass('alternate');
