@@ -258,7 +258,7 @@
     </div>
     <div class="container inner-container page-body-padding">
         <ul class="apps" data-bind="foreach: Apps">
-            <li class="searchable-app" data-bind="css: { visible: IsVisible, hidden: !IsVisible() }">
+            <li class="searchable-app" data-bind="css: { visible: IsVisible, hidden: !IsVisible() }, click: $root.SelectApp" data-toggle="modal" data-target="#selected-app">
                 <div class="col-md-3 app-field searchable-key" data-bind="text: Name"></div>
                 <div class="col-md-2 app-field" data-bind="text: Category"></div>
                 <div class="col-md-2 app-field" data-bind="text: Technology"></div>
@@ -325,9 +325,128 @@
     </div>
 </div>
 
+<!-- ko if: SelectedApp -->
+<div class="modal fade" id="selected-app">
+    <div class="modal-dialog">
+        <div class="modal-content" data-bind="with: $root.SelectedApp">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" data-bind="text: Name"></h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <strong>Risk: </strong>
+                    <span class="fa fa-bell" style="color: green"></span>
+                    <!-- ko if: Risk() >= 2 -->
+                    <span class="fa fa-bell" style="color: blue"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Risk() >= 3 -->
+                    <span class="fa fa-bell" style="color: orange"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Risk() >= 4 -->
+                    <span class="fa fa-bell" style="color: darkorange"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Risk() >= 5 -->
+                    <span class="fa fa-bell" style="color: red"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Risk() <= 4 -->
+                    <span class="fa fa-bell-o"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Risk() <= 3 -->
+                    <span class="fa fa-bell-o"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Risk() <= 2 -->
+                    <span class="fa fa-bell-o"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Risk() <= 1 -->
+                    <span class="fa fa-bell-o"></span>
+                    <!-- /ko-->
+                </div>
+                <div>
+                    <strong>Popularity: </strong>
+                    <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                    <!-- ko if: Popularity() >= 2 -->
+                    <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Popularity() >= 3 -->
+                    <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Popularity() >= 4 -->
+                    <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Popularity() >= 5 -->
+                    <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Popularity() <= 4 -->
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Popularity() <= 3 -->
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Popularity() <= 2 -->
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <!-- /ko-->
+                    <!-- ko if: Popularity() <= 1 -->
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                    <!-- /ko-->
+                </div>
+                <div>
+                    <strong>Category: </strong>
+                    <span class="label label-default" data-bind="text: Category"></span>
+                </div>
+                <div>
+                    <strong>Description: </strong>
+                    <div data-bind="html: Summary"></div>
+                    <!-- ko ifnot: Summary() -->
+                    <div>N/A</div>
+                    <!-- /ko -->
+                </div>
+                <div>
+                    <strong>Impact: </strong>
+                    <div data-bind="html: Impact"></div>
+                    <!-- ko ifnot: Impact() -->
+                    <div>N/A</div>
+                    <!-- /ko -->
+                </div>
+                <div>
+                    <strong>Vendor: </strong>
+                    <div data-bind="text: Vendor"></div>
+                    <!-- ko ifnot: Vendor() -->
+                    <div>N/A</div>
+                    <!-- /ko -->
+                </div>
+                <div>
+                    <strong>Affected: </strong>
+                    <div data-bind="html: Affected"></div>
+                    <!-- ko ifnot: Affected() -->
+                    <div>N/A</div>
+                    <!-- /ko -->
+                </div>
+                <div>
+                    <strong>Recommended Action: </strong>
+                    <div data-bind="html: Action"></div>
+                    <!-- ko ifnot: Action() -->
+                    <div>N/A</div>
+                    <!-- /ko -->
+                </div>
+                <div>
+                    <strong>References: </strong>
+                    <div data-bind="text: References"></div>
+                    <!-- ko foreach: References -->
+                    <div data-bind="text: $data"></div>
+                    <!-- /ko -->
+                    <!-- ko if: References().length == 0 -->
+                    <div>N/A</div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /ko -->
+
 @section Scripts {
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
     <script src="~/Scripts/knockout-3.3.0.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/Home/ApplicationSignature.js"></script>
@@ -737,6 +856,11 @@
             model.forEach(function (appSig) {
                 self.Apps.push(new ApplicationSignature(appSig, self));
             });
+
+            self.SelectedApp = ko.observable();
+            self.SelectApp = function (app) {
+                self.SelectedApp(app);
+            }
 
             // Init
             self.SortByName();

@@ -79,6 +79,11 @@ ul.apps {
 
 .searchable-app {
     background: #F0F0F0;
+    cursor: pointer;
+}
+
+.searchable-app:hover {
+    background: #FFD8F5;
 }
 
 .alternate {
