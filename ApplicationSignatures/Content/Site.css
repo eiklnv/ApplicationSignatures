@@ -4,6 +4,7 @@
 }*/
 
 .container {
+    min-width: 800px;
     width: 1800px;
     padding: 0px;
 }
@@ -28,7 +29,7 @@
 }
 
 .page-header-fixed-top {
-    top: 50px;
+    top: 70px;
     position: fixed;
     z-index: 1029;
 }
@@ -43,7 +44,7 @@
 }
 
 .page-body-padding {
-    padding-top: 120px;
+    padding-top: 140px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -72,29 +73,43 @@ ul.apps {
     margin: 0;
 }
 
+.searchable-app {
+    background: #F0F0F0;
+}
+
 .alternate {
-    background: rgb(216, 232, 249);
+    background: #D8E8F9;
 }
 
 div.app-field {
     background: inherit;
 }
 
-.toolbar
-{
+.toolbar {
     position: relative;
     padding: 0;
     display: table;
 }
 
-.toolbar > div
-{
+.toolbar li {
+    cursor: pointer;
+    padding-left: 10px;
+}
+
+.toolbar > div {
     display: table-cell;
     padding-right: 8px;
     vertical-align: top;
 }
 
-    .toolbar.btn-group, .toolbar.btn-group-vertical
-    {
+    .toolbar.btn-group, .toolbar.btn-group-vertical {
         vertical-align: inherit;
     }
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}

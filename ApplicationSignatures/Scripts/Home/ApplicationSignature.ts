@@ -26,8 +26,10 @@ class ApplicationSignature {
     DeepAppCtrlDisplay: KnockoutComputed<string>;
 
     // Client Side Controls
+    IsVisible: KnockoutComputed<boolean>;
 
-    constructor(signature) {
+
+    constructor(signature, parent) {
         var self: ApplicationSignature = this;
 
         // Model Variables
@@ -64,6 +66,15 @@ class ApplicationSignature {
         self.DeepAppCtrl = ko.observable<number>(signature.DeepAppCtrl);
         self.DeepAppCtrlDisplay = ko.computed<string>(function () {
             return self.DeepAppCtrl() > 0 ? "Yes" : "No";
+        });
+
+        // Client Side Controls
+        self.IsVisible = ko.computed<boolean>(function () {
+            return self.Name().toLowerCase().indexOf(parent.Filter().toLowerCase()) >= 0 &&
+                parent.IsCategoryVisible(self.Category()) &&
+                parent.IsTechnologyVisible(self.Technology()[0]) &&
+                parent.IsPopularityVisible(self.Popularity()) &&
+                parent.IsRiskVisible(self.Risk());
         });
     }
 

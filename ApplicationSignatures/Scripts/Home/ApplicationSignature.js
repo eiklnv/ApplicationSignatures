@@ -2,8 +2,7 @@
 /// <reference path="../typings/knockout/knockout.d.ts" />
 /// <reference path="../typings/moment/moment.d.ts" />
 var ApplicationSignature = (function () {
-    // Client Side Controls
-    function ApplicationSignature(signature) {
+    function ApplicationSignature(signature, parent) {
         var self = this;
         // Model Variables
         self.Name = ko.observable(signature.Name);
@@ -40,6 +39,15 @@ var ApplicationSignature = (function () {
         self.DeepAppCtrlDisplay = ko.computed(function () {
             return self.DeepAppCtrl() > 0 ? "Yes" : "No";
         });
+        // Client Side Controls
+        self.IsVisible = ko.computed(function () {
+            return self.Name().toLowerCase().indexOf(parent.Filter().toLowerCase()) >= 0 &&
+                parent.IsCategoryVisible(self.Category()) &&
+                parent.IsTechnologyVisible(self.Technology()[0]) &&
+                parent.IsPopularityVisible(self.Popularity()) &&
+                parent.IsRiskVisible(self.Risk());
+        });
     }
     return ApplicationSignature;
 })();
+//# sourceMappingURL=ApplicationSignature.js.map

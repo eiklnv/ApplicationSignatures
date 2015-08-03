@@ -5,58 +5,180 @@
     <div class="page-header-fixed-top container inner-container">
         <div class="toolbar">
             <div>
-                <div class="input-group hidden-print" style="margin: 5px 0 0 10px">
+                <div class="input-group hidden-print">
                     <span class="input-group-addon">Search by Application Name</span>
-                    <input id="filter" type="text" class="form-control" placeholder="Type here...">
+                    <input id="filter" type="text" class="form-control" data-bind="value: Filter, valueUpdate: 'afterkeydown'" placeholder="Type here...">
                 </div>
             </div>
             <div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category<span class="caret"></span></button>
+                <div class="dropdown keep-open">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Category <span class="caret"></span></button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#">All</a></li>
-                        <li><a href="#">Network.Service</a></li>
-                        <li><a href="#">Social.Media</a></li>
-                        <li><a href="#">General.Interest</a></li>
-                        <li><a href="#">Storage.Backup</a></li>
+                        <!-- ko if: VisibleCategories().length < AllCategories.length -->
+                        <li data-bind="click: SelectAllCategories">
+                            <span class="fa fa-fw fa-hand-pointer-o"></span>
+                            <span>Select All</span>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko if: VisibleCategories().length > 0 -->
+                        <li data-bind="click: UnselectAllCategories">
+                            <span class="fa fa-fw fa-hand-pointer-o"></span>
+                            <span>Unselect All</span>
+                        </li>
+                        <!-- /ko -->
+                        <li role="separator" class="divider"></li>
+                        <!-- ko foreach: AllCategories -->
+                        <li data-bind="click: $root.ToggleCategory">
+                            <!-- ko if: $root.IsCategoryVisible($data) -->
+                            <span class="fa fa-fw fa-check-square-o"></span>
+                            <!-- /ko -->
+                            <!-- ko ifnot: $root.IsCategoryVisible($data) -->
+                            <span class="fa fa-fw fa-square-o"></span>
+                            <!-- /ko -->
+                            <span data-bind="text: $data"></span>
+                        </li>
+                        <!-- /ko -->
                     </ul>
                 </div>
             </div>
             <div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Technology<span class="caret"></span></button>
+                <div class="dropdown keep-open">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Technology <span class="caret"></span></button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#">All</a></li>
-                        <li><a href="#">Browser-Based</a></li>
-                        <li><a href="#">Network-Protocol</a></li>
-                        <li><a href="#">Client-Server</a></li>
-                        <li><a href="#">Peer-to-Peer</a></li>
+                        <!-- ko if: VisibleTechnologies().length < AllTechnologies.length -->
+                        <li data-bind="click: SelectAllTechnologies">
+                            <span class="fa fa-fw fa-hand-pointer-o"></span>
+                            <span>Select All</span>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko if: VisibleTechnologies().length > 0 -->
+                        <li data-bind="click: UnselectAllTechnologies">
+                            <span class="fa fa-fw fa-hand-pointer-o"></span>
+                            <span>Unselect All</span>
+                        </li>
+                        <!-- /ko -->
+                        <li role="separator" class="divider"></li>
+                        <!-- ko foreach: AllTechnologies -->
+                        <li data-bind="click: $root.ToggleTechnology">
+                            <!-- ko if: $root.IsTechnologyVisible($data) -->
+                            <span class="fa fa-fw fa-check-square-o"></span>
+                            <!-- /ko -->
+                            <!-- ko ifnot: $root.IsTechnologyVisible($data) -->
+                            <span class="fa fa-fw fa-square-o"></span>
+                            <!-- /ko -->
+                            <span data-bind="text: $data"></span>
+                        </li>
+                        <!-- /ko -->
                     </ul>
                 </div>
             </div>
             <div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Popularity<span class="caret"></span></button>
+                <div class="dropdown keep-open">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Popularity <span class="caret"></span></button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#">All</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">1</a></li>
+                        <!-- ko if: VisiblePopularities().length < AllPopularities.length -->
+                        <li data-bind="click: SelectAllPopularities">
+                            <span class="fa fa-fw fa-hand-pointer-o"></span>
+                            <span>Select All</span>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko if: VisiblePopularities().length > 0 -->
+                        <li data-bind="click: UnselectAllPopularities">
+                            <span class="fa fa-fw fa-hand-pointer-o"></span>
+                            <span>Unselect All</span>
+                        </li>
+                        <!-- /ko -->
+                        <li role="separator" class="divider"></li>
+                        <!-- ko foreach: AllPopularities -->
+                        <li data-bind="click: $root.TogglePopularity">
+                            <!-- ko if: $root.IsPopularityVisible($data) -->
+                            <span class="fa fa-fw fa-check-square-o"></span>
+                            <!-- /ko -->
+                            <!-- ko ifnot: $root.IsPopularityVisible($data) -->
+                            <span class="fa fa-fw fa-square-o"></span>
+                            <!-- /ko -->
+                            <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                            <!-- ko if: $data >= 2 -->
+                            <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data >= 3 -->
+                            <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data >= 4 -->
+                            <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data >= 5 -->
+                            <span class="glyphicon glyphicon-star" style="color: gold"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data <= 4 -->
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data <= 3 -->
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data <= 2 -->
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data <= 1 -->
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <!-- /ko-->
+                        </li>
+                        <!-- /ko -->
                     </ul>
                 </div>
             </div>
             <div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Risk<span class="caret"></span></button>
+                <div class="dropdown keep-open">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Risk <span class="caret"></span></button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a href="#">All</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">1</a></li>
+                        <!-- ko if: VisibleRisks().length < AllRisks.length -->
+                        <li data-bind="click: SelectAllRisks">
+                            <span class="fa fa-fw fa-hand-pointer-o"></span>
+                            <span>Select All</span>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko if: VisibleRisks().length > 0 -->
+                        <li data-bind="click: UnselectAllRisks">
+                            <span class="fa fa-fw fa-hand-pointer-o"></span>
+                            <span>Unselect All</span>
+                        </li>
+                        <!-- /ko -->
+                        <li role="separator" class="divider"></li>
+                        <!-- ko foreach: AllRisks -->
+                        <li data-bind="click: $root.ToggleRisk">
+                            <!-- ko if: $root.IsRiskVisible($data) -->
+                            <span class="fa fa-fw fa-check-square-o"></span>
+                            <!-- /ko -->
+                            <!-- ko ifnot: $root.IsRiskVisible($data) -->
+                            <span class="fa fa-fw fa-square-o"></span>
+                            <!-- /ko -->
+                            <span class="fa fa-bell" style="color: green"></span>
+                            <!-- ko if: $data >= 2 -->
+                            <span class="fa fa-bell" style="color: blue"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data >= 3 -->
+                            <span class="fa fa-bell" style="color: orange"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data >= 4 -->
+                            <span class="fa fa-bell" style="color: darkorange"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data >= 5 -->
+                            <span class="fa fa-bell" style="color: red"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data <= 4 -->
+                            <span class="fa fa-bell-o"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data <= 3 -->
+                            <span class="fa fa-bell-o"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data <= 2 -->
+                            <span class="fa fa-bell-o"></span>
+                            <!-- /ko-->
+                            <!-- ko if: $data <= 1 -->
+                            <span class="fa fa-bell-o"></span>
+                            <!-- /ko-->
+                        </li>
+                        <!-- /ko -->
                     </ul>
                 </div>
             </div>
@@ -135,8 +257,8 @@
         </div>
     </div>
     <div class="container inner-container page-body-padding">
-        <ul class="apps" data-bind="foreach: Apps">
-            <li class="searchable-app">
+        <ul class="apps" data-bind="foreach: Apps" style="border-top: solid thin">
+            <li class="searchable-app" data-bind="css: { visible: IsVisible, hidden: !IsVisible() }">
                 <div class="col-md-3 app-field searchable-key" data-bind="text: Name"></div>
                 <div class="col-md-2 app-field" data-bind="text: Category"></div>
                 <div class="col-md-2 app-field" data-bind="text: Technology"></div>
@@ -211,35 +333,138 @@
     <script src="~/Scripts/Home/ApplicationSignature.js"></script>
 
     <script type="text/javascript">
+
         $(document).ready(function () {
-            $('.searchable-app:visible:even').addClass('alternate');
+            $('.dropdown.keep-open').on({
+                "shown.bs.dropdown": function () { this.closable = true; },
+                "click": function () { this.closable = false; },
+                "hide.bs.dropdown": function () { return this.closable; }
+            });
 
-            $('#filter').keyup(function () {
-                var rex = new RegExp($(this).val(), 'i');
-                $('.searchable-app').hide();
-                $('.searchable-app').filter(function () {
-                    return rex.test($(this).children('.searchable-key').text());
-                }).show();
+            $('#filter').on('keyup', function () {
                 UpdateHighlighting();
-            })
+            });
 
+            $('.searchable-app').addClass("visible");
             UpdateHighlighting();
         });
 
         var UpdateHighlighting = function () {
             $('.searchable-app').removeClass('alternate');
-            $('.searchable-app:visible:even').addClass('alternate');
+            $('.searchable-app.visible:odd').addClass('alternate');
         }
 
         // Here's my data model
         var ViewModel = function (model) {
             var self = this;
 
-            self.Apps = ko.observableArray();
-            model.forEach(function (appSig) {
-                self.Apps.push(new ApplicationSignature(appSig));
-            });
+            self.Filter = ko.observable('');
 
+            // Categories 
+            self.AllCategories = ["Botnet", "Business", "Cloud.IT", "Collaboration", "Email", "Game", "General.Interest", "Industrial", "Mobile", "Network.Service", "P2P", "Proxy", "Remote.Access", "Social.Media", "Storage.Backup", "Update", "Video/Audio", "VoIP", "Web.Others"]
+            self.VisibleCategories = ko.observableArray($.extend(true, [], self.AllCategories));
+
+            self.IsCategoryVisible = function (category) {
+                return self.VisibleCategories().indexOf(category) >= 0;
+            }
+
+            self.SelectAllCategories = function () {
+                self.VisibleCategories($.extend(true, [], self.AllCategories));
+                UpdateHighlighting();
+            }
+
+            self.UnselectAllCategories = function () {
+                self.VisibleCategories([]);
+                UpdateHighlighting();
+            }
+
+            self.ToggleCategory = function (category) {
+                if (self.IsCategoryVisible(category))
+                    self.VisibleCategories.remove(category);
+                else
+                    self.VisibleCategories.push(category);
+                UpdateHighlighting();
+            }
+
+            // Technology
+            self.AllTechnologies = ["Browser-Based", "Client-Server", "Network-Protocol", "Peer-to-Peer"]
+            self.VisibleTechnologies = ko.observableArray($.extend(true, [], self.AllTechnologies));
+
+            self.IsTechnologyVisible = function (technology) {
+                return self.VisibleTechnologies().indexOf(technology) >= 0;
+            }
+
+            self.SelectAllTechnologies = function () {
+                self.VisibleTechnologies($.extend(true, [], self.AllTechnologies));
+                UpdateHighlighting();
+            }
+
+            self.UnselectAllTechnologies = function () {
+                self.VisibleTechnologies([]);
+                UpdateHighlighting();
+            }
+
+            self.ToggleTechnology = function (technology) {
+                if (self.IsTechnologyVisible(technology))
+                    self.VisibleTechnologies.remove(technology);
+                else
+                    self.VisibleTechnologies.push(technology);
+                UpdateHighlighting();
+            }
+
+            // Popularity
+            self.AllPopularities = [5, 4, 3, 2, 1]
+            self.VisiblePopularities = ko.observableArray($.extend(true, [], self.AllPopularities));
+            
+            self.IsPopularityVisible = function (popularity) {
+                return self.VisiblePopularities().indexOf(popularity) >= 0;
+            }
+
+            self.SelectAllPopularities = function () {
+                self.VisiblePopularities($.extend(true, [], self.AllPopularities));
+                UpdateHighlighting();
+            }
+
+            self.UnselectAllPopularities = function () {
+                self.VisiblePopularities([]);
+                UpdateHighlighting();
+            }
+
+            self.TogglePopularity = function (popularity) {
+                if (self.IsPopularityVisible(popularity))
+                    self.VisiblePopularities.remove(popularity);
+                else
+                    self.VisiblePopularities.push(popularity);
+                UpdateHighlighting();
+            }
+
+            // Risk
+            self.AllRisks = [5, 4, 3, 2, 1]
+            self.VisibleRisks = ko.observableArray($.extend(true, [], self.AllRisks));
+
+            self.IsRiskVisible = function (risk) {
+                return self.VisibleRisks().indexOf(risk) >= 0;
+            }
+
+            self.SelectAllRisks = function () {
+                self.VisibleRisks($.extend(true, [], self.AllRisks));
+                UpdateHighlighting();
+            }
+
+            self.UnselectAllRisks = function () {
+                self.VisibleRisks([]);
+                UpdateHighlighting();
+            }
+
+            self.ToggleRisk = function (risk) {
+                if (self.IsRiskVisible(risk))
+                    self.VisibleRisks.remove(risk);
+                else
+                    self.VisibleRisks.push(risk);
+                UpdateHighlighting();
+            }
+
+            // Sorting
             self.SortMethod = ko.observable('');
             self.SortAscending = ko.observable(true);
 
@@ -507,6 +732,13 @@
                 UpdateHighlighting();
             }
 
+            // Data
+            self.Apps = ko.observableArray();
+            model.forEach(function (appSig) {
+                self.Apps.push(new ApplicationSignature(appSig, self));
+            });
+
+            // Init
             self.SortByName();
         };
 
